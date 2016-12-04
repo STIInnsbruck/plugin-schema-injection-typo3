@@ -2,7 +2,7 @@
 
     $EM_CONF[$_EXTKEY] = array(
         'title' => 'JSON-LD Importer',
-        'description' => 'Add JSON-LD structured data to your website',
+        'description' => 'Add JSON-LD structured data to your website simply by adding tags to your TypoScript file',
         'category' => 'plugin',
         'author' => 'Mathias Meinschad and Stefan Haberl',
         'author_company' => 'Semantic Technology Institute Innsbruck, Austria',
