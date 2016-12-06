@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-12-03T16:07:40Z" product-name="schema_injector">
+		<header/>
+		<body>
+			<trans-unit id="tx_schemainjector_domain_model_injector">
+				<source>Injector</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

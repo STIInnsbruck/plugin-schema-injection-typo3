@@ -1,0 +1,12 @@
+
+ # Module configuration
+module.tx_schemainjector_web_schemainjectorinjector {
+	persistence {
+		storagePid = {$module.tx_schemainjector_injector.persistence.storagePid}
+	}
+	view {
+		templateRootPaths.0 = {$module.tx_schemainjector_injector.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_schemainjector_injector.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_schemainjector_injector.view.layoutRootPath}
+	}
+}
