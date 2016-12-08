@@ -44,4 +44,11 @@ class InjectorController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         echo '<h1>Welcome to the schema.org injector!</h1>';
     }
 
+    public function frontendAction() {
+
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug(
+            'in InjectorController.php (fe)', 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__
+        );
+    }
+
 }

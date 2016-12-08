@@ -3,8 +3,18 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-if (TYPO3_MODE === 'BE') {
+/*\TYPO3\CMS\Core\Utility\DebugUtility::debug(
+    'ext_tables.php reached', 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__
+);*/
 
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    $_EXTKEY,
+    'SchemaInjector',
+    'Schema Injector'
+);
+
+if (TYPO3_MODE === 'BE') {
 	/**
 	 * Registers a Backend Module
 	 */
