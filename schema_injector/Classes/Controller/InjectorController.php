@@ -1,6 +1,9 @@
 <?php
 namespace STI\SchemaInjector\Controller;
 
+use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 
 /***************************************************************
  *
@@ -31,7 +34,7 @@ namespace STI\SchemaInjector\Controller;
 /**
  * InjectorController
  */
-class InjectorController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class InjectorController extends ActionController
 {
 
     /**
@@ -41,14 +44,7 @@ class InjectorController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function mainAction()
     {
-        echo '<h1>Welcome to the schema.org injector!</h1>';
+        // This call will add a script tag to the head of the file
+        $GLOBALS['TSFE']->additionalHeaderData[$this->extKey] = '<script src="JSON/example.ld.json" type="application/ld+json"></script>';
     }
-
-    public function frontendAction() {
-
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug(
-            'in InjectorController.php (fe)', 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__
-        );
-    }
-
 }
