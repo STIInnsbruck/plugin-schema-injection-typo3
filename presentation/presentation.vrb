@@ -1,0 +1,17 @@
+\frametitle{JSON-LD}
+\begin{block}{}
+\begin{lstlisting}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Person",
+  "name": "Albert Einstein"
+}
+</script>
+\end{lstlisting}
+\end{block}
+\begin{block}{Why JSON-LD?}
+JSON is a data format which is quite easily readable for both humans and machines.
+Extending this format for linked data (JSON-LD) allows webmasters and crawlers to handle these contents quite easily. The classical name- value pairs from JSON are extended to take additional information, like context.
+\end{block}
+
