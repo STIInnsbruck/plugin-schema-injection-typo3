@@ -3,6 +3,7 @@ namespace STI\SchemaInjector\Controller;
 
 use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use \TYPO3\CMS\Core\Utility\DebugUtility;
 
 
 /***************************************************************
@@ -39,12 +40,22 @@ class InjectorController extends ActionController
 
     /**
      * action main
-     * 
      * @return void
      */
     public function mainAction()
     {
         // This call will add a script tag to the head of the file
-        $GLOBALS['TSFE']->additionalHeaderData[$this->extKey] = '<script src="JSON/example.ld.json" type="application/ld+json"></script>';
+        $ext_path = ExtensionManagementUtility::extPath('schema_injector');
+        $GLOBALS['TSFE']->additionalHeaderData['schema_injector'] = '<script src="' . $ext_path . '" type="application/ld+json"></script>';
+    }
+
+    /**
+     * action frontend
+     * @return void
+     */
+    public function frontendAction() {
+        DebugUtility::debug('frontendAction reached', ':)');
+        // $GLOBALS['TSFE'] could be accessed here
+        //$this->view->render();
     }
 }
