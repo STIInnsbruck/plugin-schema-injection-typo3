@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.16)  10 DEC 2016 17:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.16)  14 DEC 2016 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1191,17 +1191,22 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 ] [6
 
 ]
-<example_image.png, id=68, 1921.1775pt x 949.5475pt>
-File: example_image.png Graphic file (type png)
- <use example_image.png>
-Package pdftex.def Info: example_image.png used on input line 125.
-(pdftex.def)             Requested size: 307.28987pt x 151.87274pt.
+<screenshot2.png, id=68, 839.38594pt x 553.31718pt>
+File: screenshot2.png Graphic file (type png)
+ <use screenshot2.png>
+Package pdftex.def Info: screenshot2.png used on input line 125.
+(pdftex.def)             Requested size: 307.28987pt x 202.56276pt.
+
+Overfull \vbox (6.76996pt too high) detected at line 125
+ []
 
 [7
 
 ] [8
 
- <./example_image.png>] [9
+ <./screenshot2.png>] [9
+
+] [10
 
 ]
 \tf@nav=\write7
@@ -1213,14 +1218,14 @@ Package pdftex.def Info: example_image.png used on input line 125.
 \tf@snm=\write9
 \openout9 = `presentation.snm'.
 
- [10
+ [11
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 150.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 150.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 158.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 158.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 150.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 150.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 158.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 158.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: C41DD0CE4DB6AFADC66B171251FD3D52;189.
 
@@ -1228,13 +1233,13 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 150.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 158.
  ) 
 Here is how much of TeX's memory you used:
- 26593 strings out of 493304
- 496130 string characters out of 6139871
+ 26597 strings out of 493304
+ 496155 string characters out of 6139871
  590114 words of memory out of 5000000
- 29464 multiletter control sequences out of 15000+600000
+ 29466 multiletter control sequences out of 15000+600000
  9202 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  50i,11n,53p,10375b,1457s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1244,10 +1249,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (9 pages, 117006 bytes).
+Output written on presentation.pdf (10 pages, 110369 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
- 91 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
+ 123 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 500000)
  80 words of extra memory for PDF output out of 10000 (max. 10000000)
 
