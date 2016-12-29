@@ -20,7 +20,7 @@ if (TYPO3_MODE === 'BE') {
 		'injector',	// Submodule key
 		'',						// Position
 		array(
-			'Injector' => 'main',
+			'Injector' => 'main, uploadFile, saveForm',
 		),
 		array(
 			'access' => 'user,group',

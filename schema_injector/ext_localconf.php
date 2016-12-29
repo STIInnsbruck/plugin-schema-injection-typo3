@@ -6,11 +6,11 @@
     // this array contains the Controller name (without suffix Controller) as key,
     //      and the action function name without suffix "Action"
     array(
-        'Injector' => 'frontend',
-    )/*,
+        'Injector' => 'saveFrom, uploadFile, main',
+    ),
     array(
-        'Frontend' => '',
-    )*/
+        'Injector' => 'saveFrom, uploadFile, main',
+    )
 );
 
 if (TYPO3_MODE == 'FE') {
