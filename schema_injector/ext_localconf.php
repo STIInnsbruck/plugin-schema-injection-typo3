@@ -6,10 +6,10 @@
     // this array contains the Controller name (without suffix Controller) as key,
     //      and the action function name without suffix "Action"
     array(
-        'Injector' => 'saveFrom, uploadFile, main',
+        'Injector' => 'saveFrom, uploadFile, main, listPages',
     ),
     array(
-        'Injector' => 'saveFrom, uploadFile, main',
+        'Injector' => 'saveFrom, uploadFile, main, listPages',
     )
 );
 
