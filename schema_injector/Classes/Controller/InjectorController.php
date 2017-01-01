@@ -44,7 +44,11 @@ class InjectorController extends ActionController
      */
     public function mainAction()
     {
-
+        $pages = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+            '*',         // SELECT ...
+            'tx_schemainjector_domain_model_injector'     // FROM ...
+        );
+        $this->view->assign('pages', $pages);
     }
 
     /**
@@ -155,10 +159,37 @@ class InjectorController extends ActionController
                     'tx_schemainjector_domain_model_injector',
                     array(pid => 1,
                           inject_page_id => $page[0],
+                          inject_page_name => $page[1],
                           inject_file_name => $file)
                 );
             }
         }
+    }
+
+    public function deleteEntryAction() {
+        $file = $this->request->getArgument('file_name');
+        $page = $this->request->getArgument('page_name');
+
+        $delValues = 'inject_page_name = "'.$page.'" AND inject_file_name = "'.$file.'"';
+        $GLOBALS['TYPO3_DB']->exec_DELETEquery(
+            'tx_schemainjector_domain_model_injector',
+            $delValues
+        );
+
+        //If the file is not used anymore we can delete it
+        $query = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+            'inject_file_name',         // SELECT ...
+            'tx_schemainjector_domain_model_injector',     // FROM ...
+            'inject_file_name = "'.$file.'"'
+        );
+        if(!$query) {
+            $storageRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
+            $storage = $storageRepository->findByUid('1');
+            $targetFolder = $storage->getFolder("uploads");
+            $fileObject = $storage->getFileInFolder($file, $targetFolder);
+            $storage->deleteFile($fileObject);
+        }
+        $this->redirect('main');
     }
 
     public function listPagesAction() {

@@ -7,6 +7,7 @@ CREATE TABLE tx_schemainjector_domain_model_injector (
         pid int(11) DEFAULT '0' NOT NULL,
 
         inject_page_id int(11) DEFAULT 0 NOT NULL,
+        inject_page_name varchar(50) DEFAULT '' NOT NULL,
         inject_file_name varchar(50) DEFAULT '' NOT NULL,
 
         PRIMARY KEY (uid),
