@@ -7,7 +7,7 @@
 				<source>Schema.org Injector</source>
 			</trans-unit>
 			<trans-unit id="mlang_labels_tabdescr">
-				<source>Injects your HTML tags with schema.org annotations.</source>
+				<source>Injects JSON-LD files for schema.org annotations into your pages head tag.</source>
 			</trans-unit>
 		</body>
 	</file>
