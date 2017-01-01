@@ -11,35 +11,37 @@ use \STI\SchemaInjector\Domain\Repository\InjectorRepository;
 
 class tx_schemainjector_fehook
 {
+    protected $sqlTableName = 'tx_schemainjector_domain_model_injector';
+    protected $sqlColumnNamePageId = 'inject_page_id';
+    protected $sqlColumnNameFileName = 'inject_file_name';
 
     function performInjectionIncScript(&$params, &$that)
     {
         $currentPageId = $GLOBALS['TSFE']->id;
         $currentPageCategories = NULL;
 
-        $sqlSelectStatement = 'inject_file_name';
-        $sqlTableName = 'tx_schemainjector_domain_model_injector';
-        $sqlWhereStatement = 'inject_page_id = ' . $currentPageId;
+        $sqlSelectStatement = $this->sqlColumnNameFileName;
+        $sqlWhereStatement = "$this->sqlColumnNamePageId = $currentPageId";
 
         // read from database
         $dbEntries = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-            $sqlSelectStatement, $sqlTableName, $sqlWhereStatement
+            $sqlSelectStatement, $this->sqlTableName, $sqlWhereStatement
         );
 
         if(!isset($dbEntries) || sizeof($dbEntries) <= 0) {
-            DebugUtility::debug('nothing to inject', '');
-
-            return; // do nothing in this hook
+            // nothing to inject for this page ...
+            return;
         } else {
+            // TODO: delete $resultString and injecting this stuff ...
             $resultString = 'Injected files for this page: ' . chr(10);
             $jsonFileContent = '';
             foreach($dbEntries as $res) {
-                $resultString .= $res['inject_file_name'] . ' / ';
-                $jsonFileContent .= $this->readJSONFile($res['inject_file_name']);
+                $resultString .= $res[$this->sqlColumnNameFileName] . ' / ';
+                $jsonFileContent .= $this->readJSONFile($res[$this->sqlColumnNameFileName]);
             }
 
-            $this->performInjection($params['pObj']->content, $resultString . $jsonFileContent);
-            return;
+            $this->performInjection($params['pObj']->content, $jsonFileContent);
+            $this->performInjection($params['pObj']->content, '<span style="color:green;font-weight:bold;font-size:larger;">' . $resultString . '</span>');
         }
     }
 
@@ -49,28 +51,71 @@ class tx_schemainjector_fehook
 
     }
 
+    /**
+     * reads a json file specified by fileName. It returns the complete string which is prepared for injection.
+     * @param $fileName specifies the file to be read
+     * @return string formatted json-ld with <script> tags and html comment which prints errors and information to this file
+     */
     private function readJSONFile($fileName) {
         $storageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\StorageRepository::class);
-        $storage = $storageRepository->findByUid('1'); //this is the fileadmin storage
+        $storage = $storageRepository->findByUid('1'); // access the 'fileAdmin' folder
+
+        $htmlComment = "<!-- schema.org $fileName";
+        $jsonContent = '';
+        $infoMsg = '';
+
         //get the storage folder
         $targetFolder = $storage->getFolder('uploads');
-
-        //check if file already exists
         if($storage->hasFileInFolder($fileName, $targetFolder)) {
-            //DebugUtility::debug('file ' . $fileName . 'was found', '');
-            return ''; // TODO: add correct return statement
+            try {
+                $jsonFile = $storage->getFileInFolder($fileName, $targetFolder);
+                $jsonContent = $this->validateJSONFile($storage->getFileContents($jsonFile));
+            } catch (\TYPO3\CMS\Core\Resource\Exception\InsufficientFileReadPermissionsException $e) {
+                $infoMsg = ' could not read file ...';
+            }
+        } else {
+            $infoMsg = ' file not found in folder uploads';
         }
 
-        //DebugUtility::debug('file ' . $fileName . 'was NOT found', '');
-        return '';
+        return $htmlComment . $infoMsg . ' -->' . chr(10) . $jsonContent . chr(10);
     }
 
+    /**
+     * simply checks, if the given jsonContent contains the necessary <script> tags. If not those tags are inserted
+     * @param $jsonContent string with json content or js content
+     * @return string the correct formatted string with <script> tags
+     */
+    private function validateJSONFile($jsonContent) {
+        if(strlen($jsonContent) == 0)
+            return $jsonContent;
+
+        $scriptTagStart = '';
+        $scriptTagEnd = '';
+        // if there is a simple script tag, exchange it to the json-ld specific opening script tag
+        if(strpos($jsonContent, '<script>') !== FALSE) {
+            $jsonContent = str_replace('<script>', '<script type="application/ld+json">', $jsonContent);
+        }
+        // if there not already a json-ld specific opening script tag, insert it
+        if(strpos($jsonContent, '<script type="application/ld+json">') === FALSE) {
+            $scriptTagStart = '<script type="application/ld+json">';
+        }
+        // ensure there is a closing script tag
+        if(strpos($jsonContent, '</script>') === FALSE) {
+            $scriptTagEnd = '</script>';
+        }
+        return $scriptTagStart . $jsonContent . $scriptTagEnd;
+    }
+
+    /**
+     * this function takes a pointer to the actual html content of the page rendered. It injects the string inside $codeToInject before the closing head tag
+     * @param $content string the actual html content rendered
+     * @param $codeToInject string to inject
+     */
     private function performInjection(&$content, $codeToInject)
     {
-        $injectionContent = '<!-- schema.org -->' . chr(10);
-        if($codeToInject != NULL)
-            $injectionContent .= '<span style="color:green; font-weight: bold; font-size: x-large;">' . $codeToInject . '</span>';
+        if(strlen($codeToInject) == 0)
+            return;
 
-        $content = str_replace('</head>', $injectionContent . '</head>', $content);
+        $content = str_replace('</head>', $codeToInject . '</head>', $content);
     }
 }
