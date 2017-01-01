@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stefan
- * Date: 14.12.16
- * Time: 11:12
- */
-use \TYPO3\CMS\Core\Utility\DebugUtility;
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
-use \STI\SchemaInjector\Domain\Repository\InjectorRepository;
 
 class tx_schemainjector_fehook
 {
@@ -15,7 +7,26 @@ class tx_schemainjector_fehook
     protected $sqlColumnNamePageId = 'inject_page_id';
     protected $sqlColumnNameFileName = 'inject_file_name';
 
-    function performInjectionIncScript(&$params, &$that)
+    function performNotCached(&$params, &$that) {
+        if(!$GLOBALS['TSFE']->isINTincScript()) {
+            return;
+        }
+        $this->main($params, $that);
+    }
+
+    function performCached(&$params, &$that) {
+        if($GLOBALS['TSFE']->isINTincScript()) {
+            return;
+        }
+        $this->main($params, $that);
+    }
+
+    /**
+     * performs the main injector task (reading database, reading json files, inject)
+     * @param $params object
+     * @param $that object not used yet
+     */
+    function main(&$params, &$that)
     {
         $currentPageId = $GLOBALS['TSFE']->id;
         $currentPageCategories = NULL;
@@ -45,22 +56,16 @@ class tx_schemainjector_fehook
         }
     }
 
-    function performInjectionNoIncScript(&$params, &$that)
-    {
-        //DebugUtility::debug('performing injection2', 'hook works');
-
-    }
-
     /**
      * reads a json file specified by fileName. It returns the complete string which is prepared for injection.
-     * @param $fileName specifies the file to be read
+     * @param $fileName string specifies the file to be read
      * @return string formatted json-ld with <script> tags and html comment which prints errors and information to this file
      */
     private function readJSONFile($fileName) {
         $storageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\StorageRepository::class);
         $storage = $storageRepository->findByUid('1'); // access the 'fileAdmin' folder
 
-        $htmlComment = "<!-- schema.org $fileName";
+        $htmlComment = "<!-- SchemaInjector extension: $fileName";
         $jsonContent = '';
         $infoMsg = '';
 
