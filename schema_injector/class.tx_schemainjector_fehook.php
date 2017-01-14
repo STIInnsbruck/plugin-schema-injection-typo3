@@ -22,15 +22,15 @@ class tx_schemainjector_fehook
     }
 
     /**
-     * performs the main injector task (reading database, reading json files, inject)
+     * performs the main injector task (reading database -> reading json files -> inject)
      * @param $params object
-     * @param $that object not used yet
+     * @param $that object not used at the moment
      */
     function main(&$params, &$that)
     {
         $currentPageId = $GLOBALS['TSFE']->id;
-        $currentPageCategories = NULL;
 
+        // build up the sql query statements
         $sqlSelectStatement = $this->sqlColumnNameFileName;
         $sqlWhereStatement = "$this->sqlColumnNamePageId = $currentPageId";
 
@@ -65,7 +65,7 @@ class tx_schemainjector_fehook
         $storageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\StorageRepository::class);
         $storage = $storageRepository->findByUid('1'); // access the 'fileAdmin' folder
 
-        $htmlComment = "<!-- SchemaInjector extension: $fileName";
+        $htmlComment = "<!-- schema_injector ($fileName)";
         $jsonContent = '';
         $infoMsg = '';
 

@@ -48,6 +48,7 @@ class InjectorController extends ActionController
             '*',         // SELECT ...
             'tx_schemainjector_domain_model_injector'     // FROM ...
         );
+        $GLOBALS['TSFE']->additionalHeaderData[$this->extKey] = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">';
         $this->view->assign('pages', $pages);
         $this->createFolder();
     }
