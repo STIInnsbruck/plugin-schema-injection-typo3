@@ -2,9 +2,7 @@
 namespace STI\SchemaInjector\Controller;
 
 use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use \TYPO3\CMS\Core\Utility\DebugUtility;
-
 
 /***************************************************************
  *
@@ -48,9 +46,8 @@ class InjectorController extends ActionController
             '*',         // SELECT ...
             'tx_schemainjector_domain_model_injector'     // FROM ...
         );
-        $GLOBALS['TSFE']->additionalHeaderData[$this->extKey] = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">';
         $this->view->assign('pages', $pages);
-        $this->createFolder();
+        //$this->createFolder();
     }
 
     /**
@@ -58,6 +55,7 @@ class InjectorController extends ActionController
      * @return void
      */
     public function frontendAction() {
+        // TODO: delete this action, if not needed
         DebugUtility::debug('frontendAction reached', ':)');
         // $GLOBALS['TSFE'] could be accessed here
         //$this->view->render();

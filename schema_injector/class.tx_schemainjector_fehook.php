@@ -39,13 +39,14 @@ class tx_schemainjector_fehook
             $sqlSelectStatement, $this->sqlTableName, $sqlWhereStatement
         );
 
-        if(!isset($dbEntries) || sizeof($dbEntries) <= 0) {
+        if(!isset($dbEntries) || $GLOBALS['TYPO3_DB']->sql_num_rows($dbEntries) == 0) {
             // nothing to inject for this page ...
             return;
         } else {
             // TODO: delete $resultString and injecting this stuff ...
             $resultString = 'Injected files for this page: ' . chr(10);
             $jsonFileContent = '';
+
             foreach($dbEntries as $res) {
                 $resultString .= $res[$this->sqlColumnNameFileName] . ' / ';
                 $jsonFileContent .= $this->readJSONFile($res[$this->sqlColumnNameFileName]);
@@ -65,17 +66,18 @@ class tx_schemainjector_fehook
         $storageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\StorageRepository::class);
         $storage = $storageRepository->findByUid('1'); // access the 'fileAdmin' folder
 
-        $htmlComment = "<!-- schema_injector ($fileName)";
+        $htmlComment = "<!-- schema_injector: $fileName ";
         $jsonContent = '';
         $infoMsg = '';
 
         //get the storage folder
         $targetFolder = $storage->getFolder('uploads');
+
         if($storage->hasFileInFolder($fileName, $targetFolder)) {
             try {
                 $jsonFile = $storage->getFileInFolder($fileName, $targetFolder);
                 $jsonContent = $this->validateJSONFile($storage->getFileContents($jsonFile));
-            } catch (\TYPO3\CMS\Core\Resource\Exception\InsufficientFileReadPermissionsException $e) {
+            } catch(\TYPO3\CMS\Core\Resource\Exception $e) {
                 $infoMsg = ' could not read file ...';
             }
         } else {
