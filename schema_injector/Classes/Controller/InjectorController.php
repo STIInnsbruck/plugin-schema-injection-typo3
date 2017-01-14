@@ -49,6 +49,7 @@ class InjectorController extends ActionController
             'tx_schemainjector_domain_model_injector'     // FROM ...
         );
         $this->view->assign('pages', $pages);
+        $this->createFolder();
     }
 
     /**
@@ -194,5 +195,15 @@ class InjectorController extends ActionController
 
     public function listPagesAction() {
 
+    }
+
+    private function createFolder() {
+        $folderName = 'uploads';
+        $storageRepository = $this->objectManager->get('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
+        $storage = $storageRepository->findByUid('1'); //this is the fileadmin storage
+        //check if the folder already exists, if not create it!
+        if(!$storage->hasFolder($folderName)) {
+            $storage->createFolder($folderName);
+        }
     }
 }
