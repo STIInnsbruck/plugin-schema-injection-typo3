@@ -1,6 +1,7 @@
 \beamer@endinputifotherversion {3.24pt}
 \select@language {german}
 \beamer@sectionintoc {1}{Project}{3}{0}{1}
-\beamer@sectionintoc {2}{Our Problems}{6}{0}{2}
-\beamer@sectionintoc {3}{Extension Preview}{7}{0}{3}
-\beamer@sectionintoc {4}{Further Steps}{8}{0}{4}
+\beamer@sectionintoc {2}{Our Extension}{6}{0}{2}
+\beamer@sectionintoc {3}{Live Demo}{8}{0}{3}
+\beamer@sectionintoc {4}{Our Problems}{9}{0}{4}
+\beamer@sectionintoc {5}{Further Steps}{10}{0}{5}

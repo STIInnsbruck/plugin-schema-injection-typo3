@@ -27,9 +27,10 @@
 
 % Here's where the presentation starts, with the info for the title slide
 \title{Schema.org Injector}
+\subtitle{Final presentation}
 \author{Stefan Haberl, Mathias Meinschad}
 \institute{STI Innsbruck}
-\date{December 14, 2016}
+\date{February 3, 2017}
 
 \begin{document}
 
@@ -44,7 +45,7 @@
 \section{Project}
 
 \begin{frame}{Project}
-The goal is to develop an extension for the CMS-system TYPO3, which allows the users to inject schema.org annotations inside their websites.
+Developing an extension for the CMS-system TYPO3, which allows the users to inject schema.org annotations inside their websites.
 Pages can be associated with JSON-LD files, which then will be injected into the pages \textless head\textgreater{tag}. 
 
 %Entwicklung einer Typo3 Extension, welches schema.org annotations in die Webseite injiziert.
@@ -55,7 +56,8 @@ Pages can be associated with JSON-LD files, which then will be injected into the
 \begin{itemize}
 \item Inject JSON-LD into single page
 \item Inject JSON-LD into multiple pages
-\item Define JSON-LD to be injected into specific page category
+\item Easy to set up and intuitive customizations
+\item Compatibility to as many TYPO3 versions as possible
 \end{itemize}
 \end{block}
 \end{frame}
@@ -97,6 +99,47 @@ CMS is a software for handling (create, update, delete) contents inside a webpag
 
 \end{frame}
 
+\section{Our Extension}
+
+\begin{frame}{Our Extension}
+
+\begin{block}{General}
+\begin{itemize}
+\item TYPO3 uses extension keys to allow unique identifying each extension
+\item extension key registered:  \textbf{schema\textunderscore injector}
+\item Developed with JetBrains PhpStorm
+\item XAMPP for local testing
+\item Will be published in TEM (Typo3 Extension Repository)
+\end{itemize}
+\end{block}
+
+\begin{block}{Technical}
+\begin{itemize}
+\item using hooks to manipulated rendered data
+\item persist settings into database
+\item use page ID to check if an injection is configured for a specific page
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Our Extension}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[height=0.75\textwidth]{work_flow.png}
+\end{figure}
+\end{frame}
+
+\section{Live Demo}
+
+\begin{frame}{Live Demo}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1.0\textwidth]{screenshot2.png}
+\caption{Figure: first UI prototype of our extension}
+\end{figure}
+\end{frame}
+
 
 \section{Our Problems}
 
@@ -104,25 +147,14 @@ CMS is a software for handling (create, update, delete) contents inside a webpag
 \begin{itemize}
 \item No experience with Typo3
 \item Caching behaviour in Typo3 while development
-\item No helpful documentation for developing TYPO3 extensions
+\item Documentation is often out of date
 \item Small community, nearly no forums
 \item Low basic knowledge in PHP
-\item Typo3 already supports file injection with TypoScript, therefore the specification is unclear to us
 \item Solutions for older version not suitable for us
 \item Typo3 in general: How to do Code Injection, how is rendering done exactly, \dots
 \end{itemize}
 \end{frame}
 
-
-\section{Extension Preview}
-
-\begin{frame}{Preview}
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1.0\textwidth]{screenshot2.png}
-\caption{Figure: first UI prototype of our extension}
-\end{figure}
-\end{frame}
 
 
 \section{Further Steps}
