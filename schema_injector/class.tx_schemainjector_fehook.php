@@ -43,17 +43,12 @@ class tx_schemainjector_fehook
             // nothing to inject for this page ...
             return;
         } else {
-            // TODO: delete $resultString and injecting this stuff ...
-            $resultString = 'Injected files for this page: ' . chr(10);
             $jsonFileContent = '';
 
-            foreach($dbEntries as $res) {
-                $resultString .= $res[$this->sqlColumnNameFileName] . ' / ';
+            foreach($dbEntries as $res)
                 $jsonFileContent .= $this->readJSONFile($res[$this->sqlColumnNameFileName]);
-            }
 
             $this->performInjection($params['pObj']->content, $jsonFileContent);
-            $this->performInjection($params['pObj']->content, '<span style="color:green;font-weight:bold;font-size:larger;">' . $resultString . '</span>');
         }
     }
 
