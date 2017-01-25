@@ -46,8 +46,20 @@ class InjectorController extends ActionController
             '*',         // SELECT ...
             'tx_schemainjector_domain_model_injector'     // FROM ...
         );
+        $page_names_query = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+            'inject_file_name',         // SELECT ...
+            'tx_schemainjector_domain_model_injector',     // FROM ...
+            '',
+            'inject_file_name'
+        );
+        $page_names = array();
+        foreach($page_names_query as $elem) {
+            array_push($page_names, $elem[inject_file_name]);
+        }
         $this->view->assign('pages', $pages);
-        //$this->createFolder();
+        $this->view->assign('page_names', $page_names);
+
+        $this->createFolder();
     }
 
     /**
@@ -65,6 +77,7 @@ class InjectorController extends ActionController
         //DebugUtility::debug($_FILES['tx_schemainjecotr_injector']['name']['file'],'');
 
         $file = $this->request->getArgument('file');
+        $existingFile = $this->request->getArgument('$existingFile');
         $pages = $this->request->getArgument('pages');
         $pageArray = explode(" ",$pages);
 
@@ -72,13 +85,26 @@ class InjectorController extends ActionController
         $validPages =  $this->pageCheck($pageArray);
 
 
-        if(!$validFile || !$validPages) {
+        if(!$validPages) {
             $this->addFlashMessage(
                 $messageBody = 'Unfortunatly your file could not be uploaded, please select a valid .json file and valid pages to inject',
                 $messageTitle = 'Upload failed',
                 $severity = \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR,
                 $storeInSession = TRUE
             );
+            $this->redirect('main');
+        } else if(!$validFile) {
+            $page_names_query = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+                'inject_file_name',         // SELECT ...
+                'tx_schemainjector_domain_model_injector',     // FROM ...
+                '',
+                'inject_file_name'
+            );
+            $page_names = array();
+            foreach($page_names_query as $elem) {
+                array_push($page_names, $elem[inject_file_name]);
+            }
+            $this->addEntryToDatabase($page_names[$existingFile], $pageArray);
             $this->redirect('main');
         } else {
             $folderName = 'uploads';
@@ -154,7 +180,7 @@ class InjectorController extends ActionController
             $i += 1;
         }
         foreach($pageArray as $page) {
-            if(in_array($page[1],$pagesToInsert)) {
+            if(in_array($page[1],$pagesToInsert) AND $this->noEntryExists($page[1], $file)) {
                 $GLOBALS['TYPO3_DB']->exec_INSERTquery(
                     'tx_schemainjector_domain_model_injector',
                     array(pid => 1,
@@ -164,6 +190,16 @@ class InjectorController extends ActionController
                 );
             }
         }
+    }
+
+    public function noEntryExists($page, $file) {
+        $pages = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+            '*',         // SELECT ...
+            'tx_schemainjector_domain_model_injector',     // FROM ...
+            'inject_file_name = "'.$file.'" AND inject_page_name = "'.$page.'"'       // WHERE ...
+        );
+
+        return mysqli_num_rows($pages) ? false : true;
     }
 
     public function deleteEntryAction() {
