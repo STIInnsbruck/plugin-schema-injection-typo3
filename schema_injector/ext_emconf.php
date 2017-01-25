@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Schema.org Injector',
-	'description' => 'This module will inject your HTML tags with schema.org annoations.',
+	'description' => 'This extension will inject schema.org annoations into your rendered web page.',
 	'category' => 'plugin',
 	'author' => 'Stefan Haberl, Mahtias Meinschad',
 	'author_email' => 'stefan.haberl@student.uibk.ac.at, mathias.meinschad@student.uibk.ac.at',

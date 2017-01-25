@@ -28,7 +28,7 @@ use \TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  ***************************************************************/
 
 /**
- * Injector
+ * InjectorEntity: class not used at the moment
  */
 
 class InjectorEntity extends AbstractEntity
