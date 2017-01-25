@@ -10,8 +10,12 @@
 </script>
 \end{lstlisting}
 \end{block}
+
 \begin{block}{Why JSON-LD?}
-JSON is a data format which is quite easily readable for both humans and machines.
-Extending this format for linked data (JSON-LD) allows webmasters and crawlers to handle these contents quite easily. The classical name- value pairs from JSON are extended to take additional information, like context.
+\begin{itemize}
+\item easy readable for humans and machines
+\item standard libraries for nearly any programming language
+\item difference between JSON and JSON-LD: extending known format with additional keys (e.g. context)
+\end{itemize}
 \end{block}
 
