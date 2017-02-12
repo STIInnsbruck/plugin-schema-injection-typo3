@@ -79,8 +79,9 @@ class InjectorController extends ActionController
 
         $file = $this->request->getArgument('file');
         $existingFile = $this->request->getArgument('$existingFile');
+
         $pages = $this->request->getArgument('pages');
-        $pageArray = explode(" ",$pages);
+        $pageArray = explode(" ", $pages);
 
         $validFile = substr($file[name], -4) == "json";
         $validPages =  $this->pageCheck($pageArray);
@@ -161,7 +162,7 @@ class InjectorController extends ActionController
         }
 
         foreach($pageArray as $page) {
-            if(!in_array($page,$pageTitleArray)) {
+            if(!in_array($page,$pageTitleArray) && !strpos($page, '%')) {
                 $check = false;
                 break;
             }
@@ -170,6 +171,28 @@ class InjectorController extends ActionController
     }
 
     public function addEntryToDatabase($file, $pagesToInsert) {
+        foreach($pagesToInsert as $page) {
+            $pagesFromDB = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+                "*",
+                "pages",
+                "title like '$page'"
+            );
+
+            foreach($pagesFromDB as $actualPage) {
+                // only insert if no entry exists!
+                if($this->noEntryExists($actualPage, $file)) {
+                    $GLOBALS['TYPO3_DB']->exec_INSERTquery(
+                        'tx_schemainjector_domain_model_injector',
+                        array(pid => $actualPage[pid],
+                            inject_page_id => $actualPage[uid],
+                            inject_page_name => $actualPage[title],
+                            inject_file_name => $file)
+                    );
+                }
+            }
+        }
+
+        /*
         $pages = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
             '*',         // SELECT ...
             'pages',     // FROM ...
@@ -192,7 +215,7 @@ class InjectorController extends ActionController
                           inject_file_name => $file)
                 );
             }
-        }
+        }*/
     }
 
     public function noEntryExists($page, $file) {

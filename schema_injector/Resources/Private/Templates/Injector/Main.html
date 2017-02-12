@@ -11,14 +11,14 @@
         <div class="form-group">
             <label>File input</label>
             <f:form.upload name="file" id="file" />
-            <small id="fileHelp" class="form-text text-muted">Please enter your JSON-LD files here. Or choose one existing JSON file</small><br>
+            <small id="fileHelp" class="form-text text-muted">Please enter your <b>JSON-LD</b> files here. Or choose one <b>existing</b> JSON file</small><br>
             <f:form.select class="form-control" name="$existingFile" options="{page_names}" />
         </div>
 
         <div class="form-group">
             <label>Enter all pages</label>
             <f:form.textfield type="text" class="form-control" id="pages" name="pages" />
-            <small id="pagesHelp" class="form-text text-muted">Please provide all pages you want to inject, separated by a space.</small>
+            <small id="pagesHelp" class="form-text text-muted">Please provide all pages you want to inject, separated by a <b>space</b> and use <b>%</b> as wildcard.</small>
         </div>
 
         <!--<span class="glyphicon glyphicon-ok" style="color: #449d44;" aria-hidden="true"></span>-->
