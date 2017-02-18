@@ -1,0 +1,33 @@
+.. Schema.org Injector documentation master file, created by
+   sphinx-quickstart on Fri Feb 17 10:47:32 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+EXT: Schema.org Injector
+===============================================
+
+.. image:: /image/icon.png
+
+:Created:
+      2017-02-17:
+
+:Classification:
+      Documentation
+
+:Keywords:
+      schema.org annotations, injector
+
+:Author:
+      Stefan Haberl, Mathias Meinschad
+
+:Email:
+      elias.kaerle@sti2.at
+
+:Language:
+      en
+
+.. toctree::
+   :numbered:
+   
+   Introduction/introduction
+   Extension/extension
